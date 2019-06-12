@@ -157,10 +157,29 @@
         </div>
 
         <div class="container align-center">
+            <div style="text-align: center;">
+                <div id="valid-div" class="alert alert-success" role="alert" 
+                style="border-radius: 10px;
+                transition: visibility 0s, opacity 0.5s linear;
+                display: none;
+                ">
+                    Valid Certificate
+                </div>
+                <div id="invalid-div" class="alert" role="alert" style="
+                    color: #721c24;
+                    background-color: #f8d7da;
+                    border-color: #f5c6cb;
+                    border-radius: 10px;
+                    transition: visibility 0s, opacity 0.5s linear;
+                    display: none;
+                ">
+                    Invalid Certificate
+                </div>
+            </div>
             <div class="row justify-content-md-center">
                 <div class="mbr-white col-md-10">
-                    <input id="certid" type="text" placeholder="Enter Certificate ID">
-                    <button onclick="valid()">Check Validity</button>
+                    <input id="certid" class="form-control" type="text" placeholder="Enter Certificate ID">
+                    <button type="button" class="btn btn-primary" onclick="valid()">Check Validity</button>
                 </div>
             </div>
         </div>
@@ -242,6 +261,8 @@
     <script src="assets/theme/js/script.js"></script>
     <input name="animation" type="hidden">
     <script>
+        document.getElementById('valid-div').style.display = 'none';
+        document.getElementById('invalid-div').style.display = 'none';
         // Add all certificate IDs here in certId array
         let certId = ['001', '002'];
         let docId = document.getElementById('certid');
@@ -250,19 +271,27 @@
         let valid = () => {
             let id = docId.value
             console.log('id:', id);
-
-            certId.forEach(element => {
-                if (element == id) {
-                    alert('valid certificate')
-                    break
-                } else {
-                    alert('invalid certificate')
-                    break
+            let i, ctr = 0;
+            for (i = 0; i < certId.length; i++) {
+                if (id == certId[i]) {
+                    ctr = 1;
                 }
-            });
-            docId.value = '';
-            docId.focus();
+            }
+            if (ctr == 1) {
+                document.getElementById('valid-div').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('valid-div').style.display = 'none';
+                }, 1500);
+            } else {
+                document.getElementById('invalid-div').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('invalid-div').style.display = 'none';
+                }, 1500);
 
+                docId.value = '';
+                docId.focus();
+
+            }
         }
     </script>
 
